@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presupuestos de Obras</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@languagetool-org/lt-browser@3.0.8/languagetool.min.js"></script>
+
+  </head>
+  <style type="text/css">
+    .generar-pdf-btn {
+        margin-bottom: 10px;
+    }
+        /* Estilo para fijar el bloque en la parte inferior */
+    .fixed-bottom {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white; /* Cambia el color de fondo según tu diseño */
+    padding: 10px 0; /* Añade espacio alrededor del bloque para mejorar la apariencia */
+    border-top: 1px solid #ccc; /* Agrega un borde superior opcional */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    }
+    .container {
+    margin-bottom: 280px; /* Ajusta esta altura según la altura del bloque fijo */
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1 class="text-center mb-5">Presupuestos de Obras</h1>
+      <form id="presupuestoForm">
+        <div class="form-group">
+          <label for="nombreCliente">Nombre del Cliente:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nombreCliente"
+            placeholder="Nombre"
+          />
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="salon">Salón:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="salon"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_salon"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cocina">Cocina:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="cocina"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_cocina"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <!-- Repetir este bloque para otras partes de la casa -->
+            <div class="form-group">
+              <label for="cuarto_1">Cuarto 1:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="cuarto_1"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_cuarto_1"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cuarto_2">Cuarto 2:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="cuarto_2"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_cuarto_2"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cuarto_3">Cuarto 3:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="cuarto_3"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_cuarto_3"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <!-- Repetir este bloque para otras partes de la casa -->
+            <div class="form-group">
+              <label for="bano_1">Baño 1:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="bano_1"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_bano_1"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bano_2">Baño 2:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="bano_2"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_bano_2"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <!-- Repetir este bloque para otras partes de la casa -->
+            <div class="form-group">
+              <label for="patio">Patio/Terraza:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="patio"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_patio"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fontaneria">Fontanería:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="fontaneria"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_fontaneria"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="electricidad">Electricidad:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="electricidad"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_electricidad"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="anadido">Añadido:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control descripcion"
+                  id="anadido"
+                  placeholder="Descripción de la obra"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input
+                  id="precio_anadido"
+                  type="number"
+                  class="form-control precio"
+                  data-total="total"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fixed-bottom">
+        <div class="text-center mt-4">
+          <h3>Total:</h3>
+          <h4 id="total">0 €</h4>
+        </div>
+        <button type= "button" onclick="corregirTodos()" class="btn btn-primary btn-block corregir-btn" style="background-color: red; color: white;">Corregir</button><br><br>
+        <button
+          type="button"
+          class="btn btn-primary btn-block generar-pdf-btn"
+          onclick="generarPDF()"
+        >
+          Guardar Presupuesto
+        </button>
+        </div>
+      </form>
+    </div>
+    <!-- PDFMake -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+    <script src="logica.js"></script>
+  </body>
+</html>
